@@ -30,7 +30,23 @@ def unpack_data(input_dir: str, output_file: str) -> None:
     output_path = Path(output_file)
 
     # TODO: implement the unpacking logic
-    pass
+    
+    csv_files = sorted(
+    p for p in input_path.rglob("*")
+    if p.is_file() and p.name.startswith("data-")
+)
+
+
+    if not csv_files:
+        raise ValueError(f"No CSV files found in directory {input_dir}")
+
+    dataframes = []
+    for file in csv_files:
+        df = pd.read_csv(file)
+        dataframes.append(df)
+
+    combined_data = pd.concat(dataframes, ignore_index=True)
+    combined_data.to_csv(output_path, index=False)
 
 
 if __name__ == "__main__":
