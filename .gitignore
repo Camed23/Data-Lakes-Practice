@@ -1,2 +1,3 @@
 *.csv
 data/
+*.egg-info/git rm -r --cached src/data_lakes_practice.egg-info
